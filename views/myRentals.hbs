@@ -1,0 +1,132 @@
+{{!-- <!DOCTYPE html>
+<html>
+<head>
+  <title>My Rentals</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  {{> navbar}}
+
+  <h1>My Bookings</h1>
+  {{#if rentals.length}}
+    <ul>
+      {{#each rentals}}
+        <li>
+          <strong>{{this.itemId.name}}</strong> - ₹{{this.itemId.rentPrice}}/day <br>
+          Rented from: {{this.startDate}} to {{this.endDate}} <br>
+          Status: {{this.status}} <br>
+          Owner: {{this.ownerId.name}} <br>
+        </li>
+      {{/each}}
+    </ul>
+  {{else}}
+    <p>You have not booked any items yet.</p>
+  {{/if}}
+</body>
+</html> --}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My Bookings</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <style>
+    /* My Bookings Page Styles */
+
+h1 {
+  text-align: center;
+  margin: 30px 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  max-width: 900px;
+  margin: 0 auto 50px auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.rental-card {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.rental-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.rental-card h3 {
+  margin-top: 0;
+  color: #2c3e50;
+}
+
+.rental-card p {
+  margin: 8px 0;
+  color: #555;
+  font-size: 0.9rem;
+}
+
+.rental-card img {
+  margin-top: 12px;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 150px;
+  object-fit: cover;
+  display: block;
+}
+
+p.no-bookings {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #777;
+  margin-top: 40px;
+}
+
+  </style>
+</head>
+<body>
+  {{> navbar}}
+
+  <h1>My Bookings</h1>
+
+  {{#if rentals.length}}
+    <ul>
+      {{#each rentals}}
+        <li class="rental-card">
+          <h3>{{this.itemId.name}}</h3>
+          <p>Rented from: {{this.startDate}} to {{this.endDate}}</p>
+          <p>Price per day: ₹{{this.itemId.rentPrice}}</p>
+          <p>Status: {{this.status}}</p>
+          <p>Owner: {{this.ownerId.name}}</p>
+          {{#if this.itemId.image}}
+            <img src="{{this.itemId.image}}" alt="{{this.itemId.name}}" style="max-width:150px;">
+          {{/if}}
+        </li>
+      {{/each}}
+    </ul>
+  {{else}}
+    <p>You have no bookings yet.</p>
+  {{/if}}
+</body>
+</html>

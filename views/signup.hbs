@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sign Up</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <script defer src="/js/animations.js"></script>
+</head>
+<body>
+  {{> navbar}}
+  <h1>Sign Up</h1>
+  <form action="/users/signup" method="POST">
+    <input name="name" placeholder="Full Name" required>
+    <input name="email" placeholder="Email" required type="email">
+    <input type="password" name="password" placeholder="Enter Password" required>
+    <input name="phone" placeholder="Phone Number" required>
+    <select name="userType">
+      <option value="renter">Renter</option>
+      <option value="owner">Owner</option>
+    </select>
+    <button type="submit">Register</button>
+  </form>
+</body>
+</html>

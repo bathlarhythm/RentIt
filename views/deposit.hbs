@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Deposit</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <script defer src="/js/animations.js"></script>
+</head>
+<body>
+    {{> navbar}}
+
+  <h1>Add Deposit</h1>
+  <form action="/users/deposit" method="POST">
+    <input name="userId" placeholder="User ID" required>
+    <input name="amount" placeholder="Amount (INR)" required type="number" min="100">
+    <button type="submit">Deposit</button>
+  </form>
+</body>
+</html>

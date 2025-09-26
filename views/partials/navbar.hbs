@@ -1,0 +1,25 @@
+
+
+<nav>
+  <a href="/">Home</a>
+
+  {{#if user}}
+    <span>Welcome, {{user.name}}</span>
+
+    {{#ifCond user.userType '===' 'renter'}}
+      <a href="/items/all">Browse Items</a>
+      <a href="/users/deposit">Add Deposit</a>
+      <a href="/rentals/my">My Rentals</a>
+    {{/ifCond}}
+
+    {{#ifCond user.userType '===' 'owner'}}
+      <a href="/items/list">List New Item</a>
+      <a href="/rentals/owner">View Requests</a>
+    {{/ifCond}}
+
+    <a href="/logout">Logout</a>
+  {{else}}
+    <a href="/users/signup">Sign Up</a>
+    <a href="/users/login">Login</a>
+  {{/if}}
+</nav>

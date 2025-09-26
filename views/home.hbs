@@ -1,0 +1,86 @@
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Rent It - Home</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <script defer src="/js/animations.js"></script>
+</head>
+<body>
+  {{> navbar}}
+
+  <!-- Marquee -->
+  <marquee behavior="scroll" direction="left" class="marquee">
+    🎉 Rent your favorite items now — Phones, Bikes, Cameras, Speakers & More! Safe. Secure. Trusted. 🚀
+  </marquee>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <h1>Welcome to <span>Rent It</span></h1>
+    <h3 class="tagline">You Want It , We Have It !!</h3>
+    <p class="tagline">Rent anything — cooler, bike, phone — based on your Trust Factor!</p>
+    <div class="nav">
+      <a href="/items/all">Browse Items</a>
+       {{#if user}}
+    {{#ifCond user.userType "===" "renter"}}
+      <a href="/users/deposit">Deposit</a>
+    {{/ifCond}}
+  {{/if}}
+
+
+   {{#if user}}
+    {{#ifCond user.userType "===" "owner"}}
+      <a href="/items/list">List Item</a>
+    {{/ifCond}}
+  {{/if}}
+
+     
+    </div>
+  </section>
+
+  <!-- Feature Cards -->
+  <section class="cards">
+    <div class="card">
+      <h3>Verified Owners</h3>
+      <p>All item owners are identity-verified for a safe rental experience.</p>
+    </div>
+    <div class="card">
+      <h3>Trust-Based Access</h3>
+      <p>Get access to more valuable items as your trust factor increases.</p>
+    </div>
+    <div class="card">
+      <h3>Zero Hassle Returns</h3>
+      <p>Quick, smooth item return process with deposit auto-refunds.</p>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="testimonials">
+    <h2>What Our Users Say</h2>
+    <div class="testimonial-list">
+      <div class="testimonial">
+        <p>"I rented a DSLR for my trip. Trust Factor really works!"</p>
+        <span>- Anjali, Pune</span>
+      </div>
+      <div class="testimonial">
+        <p>"As an owner, listing my gadgets gave me side income."</p>
+        <span>- Rohan, Delhi</span>
+      </div>
+      <div class="testimonial">
+        <p>"Deposit system made me feel secure as a renter."</p>
+        <span>- Fatima, Hyderabad</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>&copy; 2025 Rent Kro. Built with trust & tech ❤️</p>
+  </footer>
+</body>
+</html>

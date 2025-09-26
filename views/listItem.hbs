@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>List an Item</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <script defer src="/js/listItem.js"></script> <!-- ✅ This is the key line -->
+</head>
+<body>        
+  {{> navbar }}
+
+  <h1>List Item for Rent</h1>
+
+  <form id="listForm">
+    <input name="name" placeholder="Item Name" required>
+    <input name="value" placeholder="Market Value (₹)" required type="number">
+    <input name="rentPrice" placeholder="Rent Price (₹)" required type="number">
+    <input name="category" placeholder="Category" required>
+    <input name="city" placeholder="City" required>
+    <input name="image" placeholder="Image URL">
+    <button type="submit">List Item</button>
+  </form>
+</body>
+</html>

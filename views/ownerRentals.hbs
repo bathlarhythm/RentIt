@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My Item Bookings</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  {{> navbar}}
+
+  <h1>Bookings on My Items</h1>
+
+  {{#if rentals.length}}
+    <ul>
+      {{#each rentals}}
+        <li class="rental-card">
+          <h3>{{this.itemId.name}}</h3>
+          <p>Booked by: {{this.renterId.name}}</p>
+          <p>From {{this.startDate}} to {{this.endDate}}</p>
+          <p>Status: {{this.status}}</p>
+          <form action="/rentals/update-status" method="POST">
+            <input type="hidden" name="rentalId" value="{{this._id}}">
+            <select name="status" required>
+              <option value="requested" {{#ifCond this.status 'requested'}}selected{{/ifCond}}>Requested</option>
+              <option value="approved" {{#ifCond this.status 'approved'}}selected{{/ifCond}}>Approve</option>
+              <option value="declined" {{#ifCond this.status 'declined'}}selected{{/ifCond}}>Decline</option>
+              <option value="returned" {{#ifCond this.status 'returned'}}selected{{/ifCond}}>Returned</option>
+            </select>
+            <button type="submit">Update</button>
+          </form>
+        </li>
+      {{/each}}
+    </ul>
+  {{else}}
+    <p>No bookings yet on your items.</p>
+  {{/if}}
+</body>
+</html>
