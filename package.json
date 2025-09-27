@@ -15,7 +15,7 @@
     "hbs": "^4.2.0",
     "mongoose": "^7.8.7",
     "multer": "^2.0.2",
-    "cloudinary": "^1.41.0",         
+    "cloudinary": "^1.41.3",         
     "multer-storage-cloudinary": "^4.0.0"              
   },
   "devDependencies": {
