@@ -1,8 +1,4 @@
 
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,17 +11,24 @@
   {{> navbar}}
 
   <!-- Marquee -->
-  <marquee behavior="scroll" direction="left" class="marquee">
+  <marquee behavior="scroll" direction="left" class="marquee" class="marqueeTagline">
     🎉 Rent your favorite items now — Phones, Bikes, Cameras, Speakers & More! Safe. Secure. Trusted. 🚀
   </marquee>
 
   <!-- Hero Section -->
-  <section class="hero">
+  <div class="hero-container">
+  <section class="hero" >
     <h1>Welcome to <span>Rent It</span></h1>
     <h3 class="tagline">You Want It , We Have It !!</h3>
     <p class="tagline">Rent anything — cooler, bike, phone — based on your Trust Factor!</p>
     <div class="nav">
-      <a href="/items/all">Browse Items</a>
+
+       {{#if user}}
+    {{#ifCond user.userType "===" "renter"}}
+     <a href="/items/all">Browse Items</a>
+    {{/ifCond}}
+  {{/if}}
+      
        {{#if user}}
     {{#ifCond user.userType "===" "renter"}}
       <a href="/users/deposit">Deposit</a>
@@ -42,6 +45,7 @@
      
     </div>
   </section>
+  </div>
 
   <!-- Feature Cards -->
   <section class="cards">
@@ -84,3 +88,5 @@
   </footer>
 </body>
 </html>
+
+

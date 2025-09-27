@@ -1,55 +1,38 @@
+// routes/items.js
+
 const express = require("express");
 const router = express.Router();
 const Item = require("../models/Item");
-const jwt = require("jsonwebtoken");
-const User = require("../models/User");
+const multer = require("multer");
+const { storage } = require("../utils/cloudinaryStorage");
+const upload = multer({ storage });
 
-const JWT_SECRET = "your_jwt_secret_here";
-
-function authMiddleware(req, res, next) {
-  const token = req.headers.authorization?.split(" ")[1];
-  if (!token) return res.status(401).json({ message: "No token" });
+// ✅ Create new item without auth
+router.post("/", upload.single("image"), async (req, res) => {
   try {
-    const decoded = jwt.verify(token, JWT_SECRET);
-    req.user = decoded;
-    next();
-  } catch {
-    res.status(401).json({ message: "Invalid token" });
-  }
-}
+    if (!req.file) {
+      return res.status(400).json({ message: "No file uploaded" });
+    }
 
-// Create new item (Owner only)
-router.post("/", authMiddleware, async (req, res) => {
-  const { title, image, marketValue, rentPrice, category, city } = req.body;
-  try {
+    const { name, value, rentPrice, category, city } = req.body;
+
     const item = new Item({
-      owner: req.user.id,
-      title,
-      image,
-      marketValue,
+      name,
+      value,
       rentPrice,
       category,
       city,
-      availability: true,
+      image: req.file.path,
+      available: true,
     });
+
     await item.save();
-    res.json(item);
+    res.status(201).json({ message: "Item listed successfully", item });
   } catch (err) {
-    res.status(500).json({ message: "Server error" });
+    console.error("Upload error:", err); // 🔎 log full stack
+    res.status(500).json({ message: "Failed to list item", error: err.message });
   }
 });
 
-// Get all available items (with city filter)
-router.get("/", async (req, res) => {
-  const { city } = req.query;
-  const filter = { availability: true };
-  if (city) filter.city = city;
-  try {
-    const items = await Item.find(filter).populate("owner", "email trustFactor deposit");
-    res.json(items);
-  } catch (err) {
-    res.status(500).json({ message: "Server error" });
-  }
-});
 
 module.exports = router;

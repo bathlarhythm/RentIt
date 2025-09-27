@@ -5,19 +5,50 @@
   <link rel="stylesheet" href="/css/styles.css">
   <script defer src="/js/listItem.js"></script> <!-- ✅ This is the key line -->
 </head>
+<style>
+.list-item-form{
+  margin: auto;
+  margin-top: 2rem;
+  background-image: linear-gradient(to top, #0f2746 0%, #194c74 100%);
+  height: 40rem;
+ width: 50%;
+  min-width: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+}
+
+input:hover{
+ border:1px solid blue;
+ transform: scale(1.02);
+}
+</style>
 <body>        
   {{> navbar }}
 
   <h1>List Item for Rent</h1>
-
-  <form id="listForm">
+   <div class="list-item-form">
+  <form id ="listform" action="/items" method="POST" enctype="multipart/form-data">
     <input name="name" placeholder="Item Name" required>
     <input name="value" placeholder="Market Value (₹)" required type="number">
     <input name="rentPrice" placeholder="Rent Price (₹)" required type="number">
     <input name="category" placeholder="Category" required>
     <input name="city" placeholder="City" required>
-    <input name="image" placeholder="Image URL">
+   <input type="file" name="image" accept="image/*" required />
     <button type="submit">List Item</button>
   </form>
+
+
+  {{!-- <form action="/items" method="POST" enctype="multipart/form-data">
+  <input type="text" name="title" required />
+  <input type="number" name="marketValue" required />
+  <input type="number" name="rentPrice" required />
+  <input type="text" name="category" required />
+  <input type="text" name="city" required />
+  <input type="file" name="image" accept="image/*" required />
+  <button type="submit">Submit</button>
+</form> --}}
+  </div>
 </body>
 </html>

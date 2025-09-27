@@ -3,35 +3,67 @@
 <head>
   <title>Available Items</title>
   <link rel="stylesheet" href="/css/styles.css">
-  <script defer src="/js/booking.js"></script> <!-- new JS for booking -->
+  <script defer src="/js/booking.js"></script>
 </head>
+
+<style>
+  .image-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+  }
+  .image-container img{
+    width: 65%;
+    max-width: 250px;
+    height: 200px;
+    object-fit: cover;
+  }
+  .days-input:hover{
+    border: 1px solid blue;
+  }
+  #messageBox {
+    display: none;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+  }
+  .item-card {
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    list-style: none;
+  }
+</style>
+
 <body>
   {{> navbar}}
 
   <h1>Available Items</h1>
-  
-  <ul>
-  {{#each items}}
-    <li class="item-card">
-      <strong>{{this.name}}</strong> - ₹{{this.rentPrice}}/day in {{this.city}} <br>
-    {{#if this.image}}
-  <img src="{{this.image}}" alt="{{this.name}}" style="max-width:150px;">
-{{else}}
-  <p>No image available</p>
-{{/if}}
-      <form action="/rentals/book" method="POST" class="booking-form">
-        <input type="hidden" name="itemId" value="{{this._id}}">
-        
-        <label for="days-{{this._id}}">Days to rent:</label>
-        <input type="number" id="days-{{this._id}}" name="days" min="1" value="1" required>
-        
-        <p>Total Price: ₹<span class="total-price">{{this.rentPrice}}</span></p>
-        
-        <button type="submit">Book Now</button>
-      </form>
-    </li>
-  {{/each}}
-</ul>
+  <div id="messageBox"></div>
 
+  <ul>
+    {{#each items}}
+      <li class="item-card">
+        <strong>{{this.name}}</strong> - ₹{{this.rentPrice}}/day in {{this.city}} <br>
+        {{#if this.image}}
+          <div class="image-container">
+            <img src="{{this.image}}" alt="{{this.name}}" class="item-images">
+          </div>
+        {{else}}
+          <p>No image available</p>
+        {{/if}}
+
+        <form class="booking-form">
+          <input type="hidden" name="itemId" value="{{this._id}}">
+          <label for="days-{{this._id}}">Days to rent:</label>
+          <input type="number" id="days-{{this._id}}" name="days" min="1" value="1" required class="days-input">
+          <p>Total Price: ₹<span class="total-price">{{this.rentPrice}}</span></p>
+          <button type="submit">Book Now</button>
+        </form>
+      </li>
+    {{/each}}
+  </ul>
 </body>
 </html>

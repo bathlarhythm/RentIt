@@ -4,11 +4,41 @@
   <title>Sign Up</title>
   <link rel="stylesheet" href="/css/styles.css">
   <script defer src="/js/animations.js"></script>
+  <style>
+    .error-box {
+      max-width: 400px;
+      margin: 1em auto;
+      padding: 1em;
+      background-color: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+      border-radius: 5px;
+      display: none;
+    }
+
+    .signup-form{
+      margin: auto;
+      margin-top: 2rem;
+      background-image: linear-gradient(to top, #0f2746 0%, #194c74 100%);
+  height: 35rem;
+  width: 75%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+    }
+
+  </style>
 </head>
 <body>
   {{> navbar}}
+
   <h1>Sign Up</h1>
-  <form action="/users/signup" method="POST">
+
+  <!-- Error Box (hidden by default) -->
+  <div id="errorBox" class="error-box"></div>
+<div class="signup-form">
+  <form action="/users/signup" method="POST" style="max-width: 400px; margin: auto;">
     <input name="name" placeholder="Full Name" required>
     <input name="email" placeholder="Email" required type="email">
     <input type="password" name="password" placeholder="Enter Password" required>
@@ -19,5 +49,18 @@
     </select>
     <button type="submit">Register</button>
   </form>
+
+  </div>
+
+  <script>
+    // Get error message from URL
+    const params = new URLSearchParams(window.location.search);
+    const error = params.get('error');
+    if (error) {
+      const box = document.getElementById('errorBox');
+      box.textContent = decodeURIComponent(error);
+      box.style.display = 'block';
+    }
+  </script>
 </body>
 </html>

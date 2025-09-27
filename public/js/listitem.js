@@ -1,37 +1,28 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const form = document.getElementById("listForm");
-
+  const form = document.getElementById("listform");
   if (!form) return;
 
-  form.addEventListener("submit", async function (e) {
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
-    const formData = new FormData(form);
-    const data = Object.fromEntries(formData.entries());
 
-    if (!data.name || !data.rentPrice) {
-      alert("❌ Please fill in all required fields.");
-      return;
-    }
+    const formData = new FormData(form);
 
     try {
-      const response = await fetch("/items/list", {
+      const response = await fetch("/items", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
+        body: formData
       });
 
+      const data = await response.json(); // ✅ Parse JSON
+
       if (response.ok) {
-        alert("Your item has been listed!");
-       
+        alert(data.message); // "Item listed successfully"
         window.location.href = "/";
       } else {
-        const errorText = await response.text();
-        alert(" Error: " + errorText);
+        alert("Error: " + data.message); // Show backend error message
       }
     } catch (err) {
-      alert(" Network error: " + err.message);
+      alert("Network error: " + err.message);
     }
   });
 });

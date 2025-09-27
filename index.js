@@ -1,14 +1,16 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const session = require('express-session');
-const bodyParser = require('body-parser');
 const path = require('path');
+const cors = require("cors");
 
+// Import routes
+const itemsApiRoutes = require('./routes/items');       // Handles POST /items/api
+const itemsPageRoutes = require('./routes/itemRoutes');  // Handles GET /items/list, /items/all
 const userRoutes = require('./routes/userRoutes');
-const itemRoutes = require('./routes/itemRoutes');
 const rentalRoutes = require('./routes/rentalRoutes');
 
-const User = require('./models/User'); // Add User model to fetch user info
+const User = require('./models/User');
 
 const app = express();
 
@@ -25,30 +27,26 @@ hbs.registerHelper('ifCond', function (v1, operator, v2, options) {
   }
 });
 
-// ✅ Connect to MongoDB
-mongoose.connect('mongodb://localhost:27017/rentkro', {
+// Connect to MongoDB
+mongoose.connect("mongodb://localhost:27017/rentkro", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
 
-// ✅ Body parsers (order matters!)
-app.use(bodyParser.urlencoded({ extended: true })); // For HTML <form> submissions
-app.use(express.json());                            // ✅ For AJAX/JSON submissions
-
-// ✅ Serve static files (CSS, JS, images)
+// Serve static files
 app.use(express.static(path.join(__dirname, 'public')));
 
-// ✅ Set view engine
+// Set view engine
 app.set('view engine', 'hbs');
 
-// ✅ Session middleware
+// Session middleware
 app.use(session({
   secret: 'rentkro_secret',
   resave: false,
-  saveUninitialized: false, // Better for production
+  saveUninitialized: false,
 }));
 
-// ✅ Custom middleware to attach user from session to req/res
+// Middleware to attach user from session to req/res.locals
 app.use(async (req, res, next) => {
   if (req.session.userId) {
     try {
@@ -69,26 +67,29 @@ app.use(async (req, res, next) => {
   next();
 });
 
-// ✅ Routes
+app.use(cors());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
+// Mount routes
 app.use('/users', userRoutes);
-app.use('/items', itemRoutes);
+app.use('/items', itemsApiRoutes);    // POST /items/api (upload API)
+app.use('/items', itemsPageRoutes);       // GET /items/list, /items/all
 app.use('/rentals', rentalRoutes);
 
-// ✅ Home route
+// Home route
 app.get('/', (req, res) => {
   res.render('home');
 });
 
-// ✅ Logout route
+// Logout route
 app.get('/logout', (req, res) => {
   req.session.destroy(() => {
     res.redirect('/');
   });
 });
 
-
-
-// ✅ Start server
+// Start server
 app.listen(3000, () => {
   console.log('✅ Rent Kro running on http://localhost:3000');
 });

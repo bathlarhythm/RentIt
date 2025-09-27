@@ -2,44 +2,54 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
 
-// Show signup form
+// GET: Signup page
 router.get('/signup', (req, res) => {
   res.render('signup');
 });
 
-// Handle signup POST
+// POST: Handle signup
 router.post('/signup', async (req, res) => {
   try {
-    const user = new User(req.body);
-    await user.save();
+    const { name, email, password, userType } = req.body;
 
-    // Save user ID only in session
-    req.session.userId = user._id;
+    const existingUser = await User.findOne({ email, userType });
 
+    if (existingUser) {
+      const message = encodeURIComponent(`An account already exists for ${userType} with this email.`);
+      return res.redirect(`/users/signup?error=${message}`);
+    }
+
+    const newUser = new User({ name, email, password, userType });
+    await newUser.save();
+
+    req.session.userId = newUser._id;
+    req.session.userType = newUser.userType;
     res.redirect('/');
   } catch (err) {
-    res.status(400).send('Signup error: ' + err.message);
+    const message = encodeURIComponent('Signup error: ' + err.message);
+    res.redirect(`/users/signup?error=${message}`);
   }
 });
 
-// Show login form
+
+// GET: Login page
 router.get('/login', (req, res) => {
   res.render('login');
 });
 
-// Handle login POST
+// POST: Handle login
 router.post('/login', async (req, res) => {
-  const { email, password } = req.body;
-  const user = await User.findOne({ email });
+  const { email, password, userType } = req.body;
 
-  // Simple password check; consider hashing in real app
+  const user = await User.findOne({ email, userType });
+
   if (!user || user.password !== password) {
-    return res.status(401).send('Invalid email or password');
+    const message = encodeURIComponent('Invalid email, password, or role');
+    return res.redirect(`/users/login?error=${message}`);
   }
 
-  // Store user ID in session
   req.session.userId = user._id;
-
+  req.session.userType = user.userType;
   res.redirect('/');
 });
 
@@ -64,7 +74,7 @@ router.post('/deposit', async (req, res) => {
   const user = await User.findById(req.session.userId);
   if (!user) return res.status(404).send('User not found');
 
-  if (user.role !== 'user') {
+  if (user.userType !== 'user') {
     return res.status(403).send('Only regular users can make a deposit.');
   }
 

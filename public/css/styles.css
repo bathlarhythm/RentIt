@@ -1,4 +1,4 @@
-body {
+ body {
   font-family: 'Segoe UI', sans-serif;
   background: #f0f2f5;
   margin: 0;
@@ -22,7 +22,7 @@ form, ul {
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 /* Signup form container */
-form {
+ form {
   background: white;
   max-width: 400px;
   margin: 30px auto 60px;
@@ -30,10 +30,10 @@ form {
   border-radius: 12px;
   box-shadow: 0 4px 14px rgba(0,0,0,0.1);
   animation: slideIn 0.6s ease forwards;
-}
+} 
 
 /* Form inputs and select */
-form input, form select {
+ form input, form select {
   width: 100%;
   padding: 14px;
   margin-top: 15px;
@@ -48,10 +48,10 @@ form input, form select {
 form input:focus, form select:focus {
   border-color: #5c67f2;
   outline: none;
-}
+} 
 
 /* Submit button */
-form button {
+ form button {
   width: 100%;
   padding: 15px;
   margin-top: 25px;
@@ -70,7 +70,7 @@ form button:hover {
 }
 
 /* Page title */
-h1 {
+ h1 {
   margin-top: 30px;
   margin-bottom: 15px;
   font-weight: 700;
@@ -93,9 +93,9 @@ button {
   color: white;
   border: none;
   cursor: pointer;
-}
+} 
 
-button:hover {
+ button:hover {
   background-color: #4a52d1;
 }
 
@@ -108,7 +108,7 @@ img {
 
 img:hover {
   transform: scale(1.1);
-}
+} 
 
 /* Nav */
 .nav {
@@ -122,11 +122,13 @@ img:hover {
   color: #5c67f2;
   text-decoration: none;
   font-weight: bold;
-}
+} 
 
 /* Navbar Styles */
-nav {
-  background: linear-gradient(to right, #1f1c2c, #928dab);
+ nav {
+  /* background: linear-gradient(to right, #1f1c2c, #928dab); */
+  /* background-image: linear-gradient(to top, #e6b980 0%, #eacda3 100%); */
+  background-image: linear-gradient(to top, #09203f 0%, #537895 100%);
   color: white;
   display: flex;
   flex-wrap: wrap;
@@ -156,26 +158,48 @@ nav span {
   color: #f1c40f;
   margin-left: auto;
   padding-left: 1rem;
+} 
+
+.hero-container{
+  /* background-color: rgb(9, 9, 105); */
+  background-image: linear-gradient(to top, #051933 0%, #426885 100%);
+  height: 28rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
 }
 
 /* Hero */
-.hero {
+ .hero {
   background: white;
   padding: 40px;
   border-radius: 12px;
   text-align: center;
   box-shadow: 0 4px 16px rgba(0,0,0,0.1);
   margin: 30px auto;
+  width: 500px;
   max-width: 800px;
   animation: fadeInDown 0.8s ease-in-out;
+}
+@media (max-width: 600px) {
+  .hero {
+    width: 90%;
+    padding: 20px;
+  }
+
+  .hero-container {
+    height: auto;
+    padding: 30px 0;
+  }
 }
 
 .hero span {
   color: #5c67f2;
-}
+} 
 
 /* Marquee */
-.marquee {
+ .marquee {
   font-weight: bold;
   font-size: 1.1rem;
   padding: 10px;
@@ -183,10 +207,10 @@ nav span {
   color: #333;
   border-radius: 8px;
   margin-bottom: 20px;
-}
+} 
 
 /* Cards */
-.cards {
+ .cards {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -195,30 +219,30 @@ nav span {
 }
 
 .card {
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  width: 250px;
-  text-align: center;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  animation: slideIn 0.8s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
+
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
 
 .card h3 {
   color: #5c67f2;
   margin-bottom: 10px;
-}
+} 
 
 /* Testimonials */
-.testimonials {
+ .testimonials {
   background: #fff;
   padding: 40px 20px;
   border-radius: 12px;
   margin-top: 40px;
   box-shadow: 0 4px 16px rgba(0,0,0,0.1);
-}
+} 
 
-.testimonial-list {
+ .testimonial-list {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -239,19 +263,19 @@ nav span {
   margin-top: 10px;
   font-weight: bold;
   color: #444;
-}
+} 
 
 /* Footer */
-.footer {
+ .footer {
   margin-top: 60px;
   text-align: center;
   padding: 20px;
   color: #777;
   font-size: 0.9rem;
-}
+} 
 
 /* Responsive */
-@media (max-width: 768px) {
+ @media (max-width: 768px) {
   nav {
     flex-direction: column;
     align-items: flex-start;
@@ -267,7 +291,7 @@ nav span {
     flex-direction: column;
     align-items: center;
   }
-}
+} 
 
 /* Animations */
 @keyframes fadeInDown {
@@ -278,4 +302,26 @@ nav span {
 @keyframes slideIn {
   0% {opacity: 0; transform: translateX(-100px);}
   100% {opacity: 1; transform: translateX(0);}
+}
+
+nav a {
+  opacity: 0;
+  animation: fadeInUp 0.8s ease forwards;
+}
+
+nav a:nth-child(1) { animation-delay: 0.2s; }
+nav a:nth-child(2) { animation-delay: 0.4s; }
+nav a:nth-child(3) { animation-delay: 0.6s; }
+
+@keyframes fadeInUp {
+  0% {opacity: 0; transform: translateY(20px);}
+  100% {opacity: 1; transform: translateY(0);}
+}
+.messageBox {
+  display: none;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 5px;
+  width: 100%; /* matches card width */
+  box-sizing: border-box;
 }
